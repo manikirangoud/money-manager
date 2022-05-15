@@ -1,0 +1,99 @@
+{
+    "vaults":[
+        {
+            "name": "ICICI Bank",
+            "id": "1",
+            "type": 1,
+            "balance": 0.5,
+            "description": "Summary text",
+            "lastTransaction": "This was the last transaction.",
+            "credits": [
+                {
+                    "amount": 0.0,
+                    "source": "",
+                    "description": ""
+                }
+            ],
+            "debits": [
+                {
+                    "amount": 0.0,
+                    "spentFor": "",
+                    "description": "",
+                    "onBehalfOf": ""
+                }
+            ]
+        },
+        {
+            "name": "Cash",
+            "type": 2,
+            "id": "2",
+            "balance": 0.0,
+            "description": "Summary text",
+            "lastTransaction": "This was the last transaction.",
+            "credits": [
+                {
+                    "amount": 0.0,
+                    "source": "",
+                    "description": ""
+                }
+            ],
+            "debits": [
+                {
+                    "amount": 0.0,
+                    "spentFor": "",
+                    "description": "",
+                    "onBehalfOf": ""
+                }
+            ]
+        },
+        {
+            "name": "Upstox",
+            "type": 3,
+            "id": "3",
+            "balance": 0.0,
+            "stockCount": 0,
+            "description": "Summary text",
+            "lastTransaction": "This was the last transaction.",
+            "buys": [
+                {
+                    "amount": 0.0,
+                    "quantity": 0,
+                    "name": "",
+                    "description": ""
+                }
+            ],
+            "sells": [
+                {
+                    "amount": 0.0,
+                    "description": "",
+                    "quantity": 0,
+                    "name": ""
+                }
+            ]
+        },
+        {
+            "name": "Axis credit card",
+            "id": "4",
+            "type": 4,
+            "limit": 25000,
+            "used": 20000,
+            "description": "This is the Axis credit card",
+            "lastTransaction": "This was the last transaction.",
+            "credits": [
+                {
+                    "amount": 0.0,
+                    "source": "",
+                    "description": ""
+                }
+            ],
+            "debits": [
+                {
+                    "amount": 0.0,
+                    "spentFor": "",
+                    "description": "",
+                    "onBehalfOf": ""
+                }
+            ]
+        }
+    ]
+}
