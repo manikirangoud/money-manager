@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Card } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 
 interface Data{
     credit: CreditVault;
@@ -17,7 +17,7 @@ const CreditCard: React.FC<Data> = (props) => {
 
             <Card.Body>
                 <Card.Title>{props.credit.name}</Card.Title>
-                <Card.Text>Credit used: {credit.credit.used} / {credit.credit.limit}</Card.Text>
+                <Card.Text>Credit used: {props.credit.used ? props.credit.used : 0 } / {props.credit.limit}</Card.Text>
             </Card.Body>
 
         </Card>

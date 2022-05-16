@@ -18,12 +18,13 @@ function App() {
   const [showAddVault, setShowAddVault] = React.useState(false);
   const [showAddTransaction, setShowAddTransaction] = React.useState(false);
   const [vaultId, setVaultId] = React.useState('');
+  const [selectedVault, setSelectedVault] = React.useState({});
 
-  function handleAddVault(show){
+  const handleAddVault = (show) => {
     setShowAddVault(!show);
   }
 
-  function handleAddTransaction(show){
+  const handleAddTransaction = (show) => {
     setShowAddTransaction(!show);
   }
 
@@ -37,6 +38,7 @@ function App() {
 
   const setSelectedVaultId = (id) => {
     setVaultId(id);
+    setSelectedVault(vaults.find(v => v.id == id));
   }
 
 
@@ -69,7 +71,7 @@ function App() {
         
        <div style={{flex: 1}} className='d-flex flex-column align-items-center'>
           { vaultId && <Transactions id={vaultId} className='mb-3'></Transactions>}
-          {showAddTransaction && <AddTransaction vaults={vaults} handleAddTransaction={handleAddTransaction}></AddTransaction>}
+          {showAddTransaction && <AddTransaction handleAddTransaction={handleAddTransaction} selectedVault={selectedVault}></AddTransaction>}
           <div className='text-center mb-3'>
             <Button variant="dark" onClick={() => handleAddTransaction(showAddTransaction)}>{showAddTransaction ? Constants.CANCEL : Constants.ADD_TRANSACTION}</Button>
           </div>      
