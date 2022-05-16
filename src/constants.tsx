@@ -19,3 +19,11 @@ export const enum CreditOptions{
     BUY = 1,
     SELL = 2
 }
+
+export const enum Constants{
+    GO_TO_DETAILS = "Go to Details",
+    CANCEL = "Cancel",
+    ADD_VAULT = 'Add Vault',
+    ADD_TRANSACTION = 'Add Transaction',
+    SAVE_CHANGES = 'Save Changes',
+}

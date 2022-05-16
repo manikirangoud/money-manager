@@ -11,13 +11,14 @@
                 {
                     "amount": 0.0,
                     "source": "",
-                    "description": ""
+                    "description": "",
+                    "onBehalfOf": ""
                 }
             ],
             "debits": [
                 {
                     "amount": 0.0,
-                    "spentFor": "",
+                    "spentOn": "",
                     "description": "",
                     "onBehalfOf": ""
                 }

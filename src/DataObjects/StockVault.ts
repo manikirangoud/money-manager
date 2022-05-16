@@ -1,4 +1,6 @@
-interface BankVault extends Vault{
+import Vault from './Vault';
+
+export interface StockVault extends Vault{
     buys: Array<Buy>;
     sells: Array<Sell>;
 }

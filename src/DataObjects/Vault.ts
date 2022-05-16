@@ -1,4 +1,4 @@
-interface Vault{
+export default interface Vault{
     name: string;
     type: string;
     balance: number;

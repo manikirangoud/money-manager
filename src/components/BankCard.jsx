@@ -5,16 +5,21 @@ interface Data{
     bank: BankVault;
 }
 
-const BankCard: React.FC<Data> = (bank: BankVault) => {
-    
+const BankCard: React.FC<Data> = (props) => {
+
+    const classes = props.bank.id === props.selectedVaultId ? 'vault-selected mb-3 c-pointer' : 'mb-3 c-pointer';
+
     return(
-        <Card style={{ width: '20rem' }} className="mb-3">
+        <Card style={{ width: '20rem' }} className={classes} onClick={() => {props.setVaultId(props.bank.id)}}>
+            <Card.Header>
+                <Card.Title>{props.bank.name}</Card.Title>
+            </Card.Header>
+
             <Card.Body>
-            <Card.Title>{bank.bank.name}</Card.Title>
-            <Card.Text>
-                Balance: {bank.bank.balance}
-            </Card.Text>
-            <Button variant="dark">Go to Details</Button>
+                <Card.Text>
+                    Balance: {props.bank.balance}
+                </Card.Text>
+                {/* <Button variant="outline-dark" size='sm'>Go to Details</Button> */}
             </Card.Body>
         </Card>
     );

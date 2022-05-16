@@ -11,3 +11,49 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.App{
+  min-height: 100vh;
+  text-align: left !important;
+}
+
+.App > .header {
+  height: 4rem;
+  background-color: #212121;
+  /* border-radius: 0 0 8px 8px; */
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.App > .footer {
+  height: 4rem;
+  background-color: #212121;
+  /* border-radius: 8px 8px 0 0; */
+}
+
+.hr-divider{
+  width: 1px;
+  background-color: lightgray;
+  margin: 10rem 0 10rem 0 ;
+}
+
+.text-bold{
+  font-weight: bold !important;
+}
+
+.vault-selected.card{
+  border-color: #212121;
+}
+
+.vault-selected > .card-header{
+   background-color: #212121;
+   color: white;
+}
+
+.c-pointer{
+  cursor: pointer !important;
+}

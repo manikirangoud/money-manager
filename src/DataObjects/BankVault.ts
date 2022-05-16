@@ -1,4 +1,6 @@
-interface BankVault extends Vault{
+import Vault from './Vault';
+
+export default interface BankVault extends Vault{
     credits: Array<Credit>;
     debits: Array<Debit>;
 }
