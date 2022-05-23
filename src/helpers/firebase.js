@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import {getFirestore} from '@firebase/firestore';
+import { collection } from 'firebase/firestore';
 
 const firebaseConfig = {
     apiKey: "AIzaSyCZbpAfuK9D6HWzL7O2CZsF-9c2nyagZUw",
@@ -15,3 +16,5 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 export const db = getFirestore(app);
+
+export const HistoryRef = collection(db, "history");

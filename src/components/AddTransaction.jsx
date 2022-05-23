@@ -2,8 +2,9 @@ import React from 'react'
 import { Button, Card, Form } from 'react-bootstrap';
 import { renderVaultOptions, renderTransactionUI } from '../helpers/renderHelper';
 import { Constants, CommonFeilds } from '../constants.tsx';
-import { db } from '../helpers/firebase';
-import { updateDoc, doc } from 'firebase/firestore';
+import { db, HistoryRef } from '../helpers/firebase';
+import { updateDoc, doc, addDoc } from 'firebase/firestore';
+import { BankAccountOptions, BankFeilds } from '../constants.tsx';
 
 interface Data{
     vaults: Array;
@@ -30,8 +31,19 @@ const AddTransaction: React.FC<Data> = (props) => {
 
       const addTransaction = ( ) => {
         const vaultRef = doc(db, "vaults", vaultId);
-
+        formData.createdDate = Date().toString();
+        const history = {
+            operation: 1,
+            name: formData.name ? formData.name : props.transactionType == BankAccountOptions.DEBIT ? BankFeilds.SPENTON : BankFeilds.SOURCE,
+            parentType: props.selectedVault.type,
+            parentId: vaultId,
+            type: formData.transactionType,
+            amount: formData.amount,
+            createdDate: formData.createdDate,
+          }
+        addDoc(HistoryRef, history);
         updateDoc(vaultRef, {transactions: props.selectedVault.transactions ? props.selectedVault.transactions.concat(formData) : [formData]});
+       
         props.handleAddTransaction(true);
       }
     

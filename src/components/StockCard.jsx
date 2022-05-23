@@ -20,7 +20,7 @@ const StockCard: React.FC<Data> = (props) => {
                 <Card.Text>
                     {Constants.BALANCE + Constants.COLON} {props.stock.balance}
                     <br/>
-                    {Constants.STOCKS + Constants.COLON} {props.stock.transactions.length}
+                    {Constants.STOCKS + Constants.COLON} { props.stock.transactions && props.stock.transactions.length} //Test stock - history
                 </Card.Text>
             </Card.Body>
         </Card>

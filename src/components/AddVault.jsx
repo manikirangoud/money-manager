@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Card, Form } from 'react-bootstrap';
-import { db } from '../helpers/firebase';
+import { db, HistoryRef } from '../helpers/firebase';
 import { collection, addDoc } from 'firebase/firestore';
 import BankVault from '../DataObjects/BankVault.ts';
 import { VaultType, CommonFeilds, CreditFeilds, Constants } from '../constants.tsx';
@@ -18,7 +18,20 @@ const AddVault: React.FC<Data> = (props) => {
   const [balanceOrLimit, setBalanceOrLimit] = React.useState(CommonFeilds.BALANCE);
   
   function addVault(){
+    formData.createdDate = Date().toString();
+    const history =  {
+      operation: 1,
+      name: formData.name,
+      parentType: -1,
+      parentId: '',
+      type: formData.type,
+      amount: formData[balanceOrLimit],
+      createdDate: formData.createdDate,
+    };
+    
+    addDoc(HistoryRef, history);
     addDoc(vaultsRef, formData);
+
     props.hideCard(true);
   }
 
