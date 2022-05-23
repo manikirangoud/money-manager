@@ -28,7 +28,7 @@ const Transactions: React.FC<Data> = (props) => {
         );
     } else{
         return (
-            <p><span className='text-bold'>{t.amount}</span> {t.transactionType === BankAccountOptions.DEBIT ? 'spent for ' : 'credited from ' } <span className='text-bold'>{t.spentOn}</span> </p>
+            <p><span className='text-bold'>{t.amount}</span> {t.transactionType === BankAccountOptions.DEBIT ? 'spent for ' : 'credited from ' } <span className='text-bold'>{ t.transactionType === BankAccountOptions.DEBIT ? t.spentOn : t.source }</span> </p>
         );
     }
   }

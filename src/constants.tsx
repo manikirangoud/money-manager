@@ -21,6 +21,12 @@ export const enum CreditOptions{
     SELL = 2
 }
 
+export const enum HistoryOperations{
+    CREATE = 1,
+    UPDATE = 2,
+    DELETE = 3
+}
+
 export const enum Constants{
     GO_TO_DETAILS = "Go to Details",
     CANCEL = "Cancel",

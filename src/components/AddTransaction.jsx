@@ -34,7 +34,7 @@ const AddTransaction: React.FC<Data> = (props) => {
         formData.createdDate = Date().toString();
         const history = {
             operation: 1,
-            name: formData.name ? formData.name : props.transactionType == BankAccountOptions.DEBIT ? BankFeilds.SPENTON : BankFeilds.SOURCE,
+            name: formData.name ? formData.name : props.transactionType == BankAccountOptions.DEBIT ? formData[BankFeilds.SPENTON] : formData[BankFeilds.SOURCE],
             parentType: props.selectedVault.type,
             parentId: vaultId,
             type: formData.transactionType,
