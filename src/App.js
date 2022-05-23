@@ -10,6 +10,8 @@ import AddVault from './components/AddVault';
 import { db } from './helpers/firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import Transactions from './components/Transactions';
+import Header from './components/Header';
+import Authentication from './components/Authentication';
 
 function App() {
 
@@ -19,6 +21,7 @@ function App() {
   const [showAddTransaction, setShowAddTransaction] = React.useState(false);
   const [vaultId, setVaultId] = React.useState('');
   const [selectedVault, setSelectedVault] = React.useState({});
+  const [authenticated, setAuthenticated] = React.useState(false);
 
   const handleAddVault = (show) => {
     setShowAddVault(!show);
@@ -34,50 +37,56 @@ function App() {
       setVaults(vaults.docs.map(doc => ({...doc.data(), id: doc.id})))
     }
     getVaults();
-  }, [showAddVault]);
+    if(!showAddTransaction){
+      setSelectedVaultId(vaultId);
+    }
+  }, [showAddVault, showAddTransaction]);
 
   const setSelectedVaultId = (id) => {
     setVaultId(id);
     setSelectedVault(vaults.find(v => v.id == id));
+    setShowAddTransaction(false);
   }
 
 
   return (
     <div className='App'>
 
-      <div className='header'>Money Manager</div>
+     <Header/>
 
-      <div className='d-flex justify-content-around flex-wrap p-4 bg-light'>
+     {
+        !authenticated ? <Authentication setAuthenticated={setAuthenticated}></Authentication> :
+        ( <div className='d-flex justify-content-around flex-wrap p-4 bg-light'>
 
-        <div style={{flex: 1}} className='d-flex flex-column align-items-center'>
-            {vaults.map(v => {
-              switch(v.type){
-                case VaultType.BANK_ACCOUNT:
-                case VaultType.CASH: return <BankCard bank={v} key={v.id} setVaultId={setSelectedVaultId} selectedVaultId={vaultId}></BankCard>;
-                case VaultType.STOCK: return <StockCard stock={v} key={v.id} setVaultId={setSelectedVaultId} selectedVaultId={vaultId}></StockCard>;
-                case VaultType.CREDIT: return <CreditCard credit={v} key={v.id} setVaultId={setSelectedVaultId} selectedVaultId={vaultId}></CreditCard>;
-              }
-            })}
+          <div style={{flex: 1}} className='d-flex flex-column align-items-center'>
+              {vaults.map(v => {
+                switch(v.type){
+                  case VaultType.BANK_ACCOUNT:
+                  case VaultType.CASH: return <BankCard bank={v} key={v.id} setVaultId={setSelectedVaultId} selectedVaultId={vaultId}></BankCard>;
+                  case VaultType.STOCK: return <StockCard stock={v} key={v.id} setVaultId={setSelectedVaultId} selectedVaultId={vaultId}></StockCard>;
+                  case VaultType.CREDIT: return <CreditCard credit={v} key={v.id} setVaultId={setSelectedVaultId} selectedVaultId={vaultId}></CreditCard>;
+                }
+              })}
 
-          {showAddVault && <AddVault hideCard={handleAddVault} ></AddVault>}
+            {showAddVault && <AddVault hideCard={handleAddVault} ></AddVault>}
 
-          <div className='text-center mb-3'>
-            <Button variant="dark" onClick={() => handleAddVault(showAddVault)}>{showAddVault ? Constants.CANCEL : Constants.ADD_VAULT}</Button>
+            <div className='text-center mb-3'>
+              <Button variant="dark" onClick={() => handleAddVault(showAddVault)}>{showAddVault ? Constants.CANCEL : Constants.ADD_VAULT}</Button>
+            </div>
+
           </div>
 
+          {/* <div className='hr-divider'></div> */}
+          
+        <div style={{flex: 1}} className='d-flex flex-column align-items-center'>
+            { vaultId && <Transactions selectedVault={selectedVault} className='mb-3'></Transactions>}
+            { showAddTransaction && <AddTransaction handleAddTransaction={handleAddTransaction} selectedVault={selectedVault}></AddTransaction>}
+            <div className='text-center mb-3'>
+              <Button variant="dark" onClick={() => handleAddTransaction(showAddTransaction)}>{showAddTransaction ? Constants.CANCEL : Constants.ADD_TRANSACTION}</Button>
+            </div>      
         </div>
-
-        {/* <div className='hr-divider'></div> */}
-        
-       <div style={{flex: 1}} className='d-flex flex-column align-items-center'>
-          { vaultId && <Transactions id={vaultId} className='mb-3'></Transactions>}
-          {showAddTransaction && <AddTransaction handleAddTransaction={handleAddTransaction} selectedVault={selectedVault}></AddTransaction>}
-          <div className='text-center mb-3'>
-            <Button variant="dark" onClick={() => handleAddTransaction(showAddTransaction)}>{showAddTransaction ? Constants.CANCEL : Constants.ADD_TRANSACTION}</Button>
-          </div>      
-       </div>
-        
-      </div>
+          
+        </div>)}
 
       <div className='footer'></div>
     </div>

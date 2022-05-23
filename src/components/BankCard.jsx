@@ -1,5 +1,6 @@
 import React from 'react'
-import { Button, Card } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
+import { Constants } from '../constants.tsx';
 
 interface Data{
     bank: BankVault;
@@ -17,9 +18,8 @@ const BankCard: React.FC<Data> = (props) => {
 
             <Card.Body>
                 <Card.Text>
-                    Balance: {props.bank.balance}
+                    {Constants.BALANCE + Constants.COLON} {props.bank.balance}
                 </Card.Text>
-                {/* <Button variant="outline-dark" size='sm'>Go to Details</Button> */}
             </Card.Body>
         </Card>
     );

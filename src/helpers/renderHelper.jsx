@@ -1,5 +1,6 @@
 import { Form } from 'react-bootstrap';
 import BankTransaction from '../components/BankTransaction';
+import StockTransaction from '../components/StockTransaction';
 import { VaultType, BankAccountOptions, StockOptions } from '../constants.tsx';
 
 export function renderVaultOptions(vType, handleChange){
@@ -63,9 +64,7 @@ export const renderTransactionUI = (vaultType, transactionType, handleChange) =>
             return <BankTransaction transactionType={transactionType} handleChange={handleChange}></BankTransaction>;
         
         case VaultType.STOCK:
-            return (
-                <div>Stock options</div>
-            );
+            return <StockTransaction transactionType={transactionType} handleChange={handleChange}></StockTransaction>;
 
         default:
             break;

@@ -3,7 +3,7 @@ import { Button, Card, Form } from 'react-bootstrap';
 import { db } from '../helpers/firebase';
 import { collection, addDoc } from 'firebase/firestore';
 import BankVault from '../DataObjects/BankVault.ts';
-import { VaultType } from '../constants.tsx';
+import { VaultType, CommonFeilds, CreditFeilds, Constants } from '../constants.tsx';
 import { renderVaults } from '../helpers/renderHelper';
 
 interface Data{
@@ -15,7 +15,7 @@ const AddVault: React.FC<Data> = (props) => {
 
   const vaultsRef = collection(db, "vaults");
   const [formData, updateFormData] = React.useState(BankVault);
-  const [balanceOrLimit, setBalanceOrLimit] = React.useState('balance');
+  const [balanceOrLimit, setBalanceOrLimit] = React.useState(CommonFeilds.BALANCE);
   
   function addVault(){
     addDoc(vaultsRef, formData);
@@ -24,17 +24,17 @@ const AddVault: React.FC<Data> = (props) => {
 
   const handleChange = (e) => {
 
-    if(e.target.name === "type"){
+    if(e.target.name === CommonFeilds.TYPE){
         if(Number(e.target.value.trim()) === VaultType.CREDIT){
-          setBalanceOrLimit('limit');
+          setBalanceOrLimit(CreditFeilds.LIMIT);
         }else{
-          setBalanceOrLimit('balance');
+          setBalanceOrLimit(CommonFeilds.BALANCE);
         }
     }
 
     updateFormData({
       ...formData,
-      [e.target.name]: (e.target.name === "type" || e.target.name === "balance") ? Number(e.target.value.trim()) : e.target.value.trim()
+      [e.target.name]: (e.target.name === CommonFeilds.TYPE || e.target.name === CommonFeilds.BALANCE) ? Number(e.target.value.trim()) : e.target.value.trim()
     });
   };
     
@@ -53,7 +53,7 @@ const AddVault: React.FC<Data> = (props) => {
             <Form.Group className="mb-3">
               <Form.Label>Vault name</Form.Label>
               <Form.Control
-                name="name"
+                name={CommonFeilds.NAME}
                 placeholder="Vault name"
                 onChange={handleChange}
                 required
@@ -74,15 +74,15 @@ const AddVault: React.FC<Data> = (props) => {
 
             <Form.Group className="mb-3">
               <Form.Label>Vault description</Form.Label>
-              <Form.Control as="textarea" rows={3} onChange={handleChange} name="description"/>
+              <Form.Control as="textarea" rows={3} onChange={handleChange} name={CommonFeilds.DESCRIPTION}/>
             </Form.Group>
 
           </Form>
         </Card.Body>
 
         <Card.Footer className='text-end'>
-          <Button variant="dark" type="submit" onClick={(e) => {addVault(e)}}>
-            Save Changes
+          <Button variant="dark" onClick={(e) => {addVault(e)}}>
+           {Constants.SAVE_CHANGES}
           </Button>
         </Card.Footer>
 
