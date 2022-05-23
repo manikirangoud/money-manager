@@ -17,6 +17,7 @@ export function renderVaultOptions(vType, handleChange){
                         <option>Select any transaction type</option>
                         <option value={BankAccountOptions.CREDIT}>{BankAccountOptions[BankAccountOptions.CREDIT]}</option>
                         <option value={BankAccountOptions.DEBIT}>{BankAccountOptions[BankAccountOptions.DEBIT]}</option>
+                        <option value={BankAccountOptions.BLOCKED}>{BankAccountOptions[BankAccountOptions.BLOCKED]}</option>
                     </Form.Select>
                 </Form.Group>
             );
