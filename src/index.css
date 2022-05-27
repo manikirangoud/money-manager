@@ -57,3 +57,7 @@ code {
 .c-pointer{
   cursor: pointer !important;
 }
+
+.card-title > .badge{
+  font-size: .8rem !important;
+}
