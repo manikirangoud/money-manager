@@ -15,7 +15,7 @@ const StockCard: React.FC<Data> = (props) => {
     const badgeClass = isSelected ? 'light text-dark' : 'dark';
 
     return (
-        <Card style={{ width: '20rem' }} className={classes} onClick={() => props.setVaultId(props.stock.id)}>
+        <Card style={{ width: '22rem' }} className={classes} onClick={() => props.setVaultId(props.stock.id)}>
             <Card.Header>
                 <Card.Title className='mb-0'>
                     {props.stock.name} {' '}

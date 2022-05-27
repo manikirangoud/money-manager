@@ -6,7 +6,7 @@ import { db, HistoryRef } from '../helpers/firebase';
 import { updateDoc, doc, addDoc } from 'firebase/firestore';
 import { BankAccountOptions, BankFeilds } from '../constants.tsx';
 
-interface Data{
+interface Data {
     vaults: Array;
 }
 
@@ -15,11 +15,11 @@ const AddTransaction: React.FC<Data> = (props) => {
     const [vaultType] = React.useState(props && props.selectedVault && props.selectedVault.type);
     const [transactionType, setTransactionType] = React.useState(0);
     const [formData, updateFormData] = React.useState({});
-    const [vaultId] = React.useState(props && props.selectedVault && props.selectedVault.id); 
+    const [vaultId] = React.useState(props && props.selectedVault && props.selectedVault.id);
 
     const handleChange = (e) => {
 
-        if(e.target.name === CommonFeilds.TRANSACTIONTYPE){
+        if (e.target.name === CommonFeilds.TRANSACTIONTYPE) {
             setTransactionType(e.target.value);
         }
 
@@ -27,9 +27,9 @@ const AddTransaction: React.FC<Data> = (props) => {
             ...formData,
             [e.target.name]: (e.target.name === CommonFeilds.TRANSACTIONTYPE || e.target.name === CommonFeilds.AMOUNT) ? Number(e.target.value.trim()) : e.target.value.trim()
         });
-      };
+    };
 
-      const addTransaction = ( ) => {
+    const addTransaction = () => {
         const vaultRef = doc(db, "vaults", vaultId);
         formData.createdDate = Date().toString();
         const history = {
@@ -40,15 +40,15 @@ const AddTransaction: React.FC<Data> = (props) => {
             type: formData.transactionType,
             amount: formData.amount,
             createdDate: formData.createdDate,
-          }
+        }
         addDoc(HistoryRef, history);
-        updateDoc(vaultRef, {transactions: props.selectedVault.transactions ? props.selectedVault.transactions.concat(formData) : [formData]});
-       
+        updateDoc(vaultRef, { transactions: props.selectedVault.transactions ? props.selectedVault.transactions.concat(formData) : [formData] });
+
         props.handleAddTransaction(true);
-      }
-    
-    return(
-        <Card style={{ width: '35rem', height: 'fit-content' }} className="mb-3">
+    }
+
+    return (
+        <Card style={{ width: '20rem', height: 'fit-content' }} className="mb-3">
 
             <Card.Header>
                 <Card.Title>Add a transaction to <span className='text-bold'>{props.selectedVault.name}</span></Card.Title>
@@ -59,12 +59,13 @@ const AddTransaction: React.FC<Data> = (props) => {
 
                     {vaultType > 0 && renderVaultOptions(vaultType, handleChange)}
 
-                    { (vaultType > 0 && transactionType > 0) && renderTransactionUI(vaultType, transactionType, handleChange) }
+                    {(vaultType > 0 && transactionType > 0) && renderTransactionUI(vaultType, transactionType, handleChange)}
 
                 </Form>
             </Card.Body>
 
             <Card.Footer className='text-end'>
+                <Button variant="dark" className='me-3' onClick={() => props.handleAddTransaction(true)}>{Constants.CANCEL}</Button>
                 <Button variant="dark" onClick={addTransaction}>{Constants.SAVE_CHANGES}</Button>
             </Card.Footer>
 
