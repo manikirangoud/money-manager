@@ -1,27 +1,35 @@
 import React from 'react'
-import { Card } from 'react-bootstrap';
+import { Badge, Card } from 'react-bootstrap';
 import { Constants } from '../constants.tsx';
+import { getVaultName } from '../helpers/helpers';
+import Transactions from './Transactions';
 
-interface Data{
+interface Data {
     stock: StockVault;
 }
 
 const StockCard: React.FC<Data> = (props) => {
 
-    const classes = props.stock.id === props.selectedVaultId ? 'vault-selected mb-3 c-pointer' : 'mb-3 c-pointer';
-    
-    return(
+    const isSelected = props.stock.id === props.selectedVaultId;
+    const classes = isSelected ? 'vault-selected mb-3 c-pointer' : 'mb-3 c-pointer';
+    const badgeClass = isSelected ? 'light text-dark' : 'dark';
+
+    return (
         <Card style={{ width: '20rem' }} className={classes} onClick={() => props.setVaultId(props.stock.id)}>
-             <Card.Header>
-                <Card.Title>{props.stock.name}</Card.Title>
+            <Card.Header>
+                <Card.Title className='mb-0'>
+                    {props.stock.name} {' '}
+                    <Badge bg={badgeClass} pill>{getVaultName({ vaultId: props.stock.type })}</Badge>
+                </Card.Title>
             </Card.Header>
-            
+
             <Card.Body>
                 <Card.Text>
                     {Constants.BALANCE + Constants.COLON} {props.stock.balance}
-                    <br/>
-                    {Constants.STOCKS + Constants.COLON} { props.stock.transactions && props.stock.transactions.length}
+                    <br />
+                    {Constants.STOCKS + Constants.COLON} {props.stock.transactions && props.stock.transactions.length}
                 </Card.Text>
+                {isSelected && <Transactions selectedVault={props.stock} />}
             </Card.Body>
         </Card>
     );
