@@ -3,11 +3,11 @@ import BankTransaction from '../components/BankTransaction';
 import StockTransaction from '../components/StockTransaction';
 import { VaultType, BankAccountOptions, StockOptions } from '../constants.tsx';
 
-export function renderVaultOptions(vType, handleChange){
+export function renderVaultOptions(vType, handleChange) {
     switch (vType) {
-        case VaultType.BANK_ACCOUNT: 
+        case VaultType.BANK_ACCOUNT:
 
-        case VaultType.CREDIT: 
+        case VaultType.CREDIT:
 
         case VaultType.CASH:
             return (
@@ -21,7 +21,7 @@ export function renderVaultOptions(vType, handleChange){
                     </Form.Select>
                 </Form.Group>
             );
-        
+
         case VaultType.STOCK:
             return (
                 <Form.Group className="mb-3">
@@ -39,7 +39,7 @@ export function renderVaultOptions(vType, handleChange){
     }
 }
 
-export function renderVaults(handleChange){
+export function renderVaults(handleChange) {
     return (
         <Form.Group className="mb-3">
             <Form.Label>Select the vault type</Form.Label>
@@ -56,18 +56,30 @@ export function renderVaults(handleChange){
 
 
 export const renderTransactionUI = (vaultType, transactionType, handleChange) => {
-    switch(vaultType){
-        case VaultType.BANK_ACCOUNT: 
+    switch (vaultType) {
+        case VaultType.BANK_ACCOUNT:
 
-        case VaultType.CREDIT: 
+        case VaultType.CREDIT:
 
         case VaultType.CASH:
             return <BankTransaction transactionType={transactionType} handleChange={handleChange}></BankTransaction>;
-        
+
         case VaultType.STOCK:
             return <StockTransaction transactionType={transactionType} handleChange={handleChange}></StockTransaction>;
 
         default:
             break;
+    }
+}
+
+export const renderTransaction = (vault, t) => {
+    if (vault.type === VaultType.STOCK) {
+        return (
+            <p className='mb-0'><span className='text-bold'>{t.amount}</span> {t.transactionType === StockOptions.BUY ? 'bought the ' : 'sold the '} <span className='text-bold'>{t.name}</span></p>
+        );
+    } else {
+        return (
+            <p className='mb-0'><span className='text-bold'>{t.amount}</span> {t.transactionType === BankAccountOptions.DEBIT ? 'spent for ' : 'credited from '} <span className='text-bold'>{t.transactionType === BankAccountOptions.DEBIT ? t.spentOn : t.source}</span> </p>
+        );
     }
 }
