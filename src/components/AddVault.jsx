@@ -5,6 +5,9 @@ import { collection, addDoc } from 'firebase/firestore';
 import BankVault from '../DataObjects/BankVault.ts';
 import { VaultType, CommonFeilds, CreditFeilds, Constants } from '../constants.tsx';
 import { renderVaults } from '../helpers/renderHelper';
+import { useDispatch } from 'react-redux';
+import { addVaultInit } from '../redux/actions/vaultActions';
+import { addHistoryInit } from '../redux/actions/historyActions';
 
 interface Data{
   show: false;
@@ -14,23 +17,32 @@ interface Data{
 const AddVault: React.FC<Data> = (props) => {
 
   const vaultsRef = collection(db, "vaults");
-  const [formData, updateFormData] = React.useState(BankVault);
+  const [vault, updateVault] = React.useState(BankVault);
   const [balanceOrLimit, setBalanceOrLimit] = React.useState(CommonFeilds.BALANCE);
+  const dispatch = useDispatch();
   
   function addVault(){
-    formData.createdDate = Date().toString();
+
+    // For credit vault type
+    if(vault && vault.type === VaultType.CREDIT){
+      vault.balance = vault.limit; 
+    } else{
+      vault.balance = 0;
+    }
+
+    vault.timeStamp = Date().toString();
     const history =  {
       operation: 1,
-      name: formData.name,
+      name: vault.name,
       parentType: -1,
       parentId: '',
-      type: formData.type,
-      amount: formData[balanceOrLimit],
-      createdDate: formData.createdDate,
+      type: vault.type,
+      amount: vault[balanceOrLimit],
+      timeStamp: vault.timeStamp,
     };
-    
-    addDoc(HistoryRef, history);
-    addDoc(vaultsRef, formData);
+
+    dispatch(addVaultInit(vault));
+    dispatch(addHistoryInit(history));
 
     props.hideCard(true);
   }
@@ -45,15 +57,15 @@ const AddVault: React.FC<Data> = (props) => {
         }
     }
 
-    updateFormData({
-      ...formData,
+    updateVault({
+      ...vault,
       [e.target.name]: (e.target.name === CommonFeilds.TYPE || e.target.name === CommonFeilds.BALANCE) ? Number(e.target.value.trim()) : e.target.value.trim()
     });
   };
     
   return (
     <>
-      <Card style={{ width: '20rem' }} className="mb-3">
+      <Card style={{ width: '22rem' }} className="mb-3">
 
         <Card.Header>
           <Card.Title>Add a new vault</Card.Title>

@@ -17,8 +17,9 @@ export const enum StockOptions{
 }
 
 export const enum CreditOptions{
-    BUY = 1,
-    SELL = 2
+    CREDIT = 1,
+    DEBIT = 2,
+    BLOCKED = 3
 }
 
 export const enum HistoryOperations{
@@ -88,4 +89,25 @@ export const enum CreditFeilds{
     ONBEHALFOF = "onBehalfOf",
     SPENTON = "spentOn",
     TRANSACTIONTYPE = "transactionType"
+}
+
+export const enum VaultActions{
+    GET_VAULTS = 'GET_VAULTS',
+    GET_VAULT = 'GET_VAULT',
+    ADD_VAULT = 'ADD_VAULT',
+    UPDATE_VAULT = 'UPDATE_VAULT',
+    DELETE_VAULT = 'DELETE_VAULT',
+    UPDATE_SELECTED_VAULT_ID = 'UPDATE_SELECTED_VAULT_ID',
+    UPDATE_SELECTED_VAULT = 'UPDATE_SELECTED_VAULT',
+    UPDATE_VAULT_BALANCE = 'UPDATE_VAULT_BALANCE',
+    ADD_TRANSACTION = 'ADD_TRANSACTION'
+}
+
+export const enum UserActions{
+    UPDATE_IS_AUTHENTICATED = 'UPDATE_IS_AUTHENTICATED',
+}
+
+export const enum HistoryActions{
+    GET_HISTORY = 'GET_HISTORY',
+    ADD_HISTORY = 'ADD_HISTORY' 
 }

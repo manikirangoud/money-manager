@@ -3,7 +3,10 @@ import BankTransaction from '../components/BankTransaction';
 import StockTransaction from '../components/StockTransaction';
 import { VaultType, BankAccountOptions, StockOptions } from '../constants.tsx';
 
-export function renderVaultOptions(vType, handleChange) {
+
+// export const renderVaultType = ({vault})
+
+export const renderVaultOptions = (vType, handleChange) => {
     switch (vType) {
         case VaultType.BANK_ACCOUNT:
 
@@ -39,7 +42,7 @@ export function renderVaultOptions(vType, handleChange) {
     }
 }
 
-export function renderVaults(handleChange) {
+export const renderVaults = (handleChange) => {
     return (
         <Form.Group className="mb-3">
             <Form.Label>Select the vault type</Form.Label>

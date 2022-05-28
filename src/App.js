@@ -10,14 +10,14 @@ function App() {
   return (
     <div className='App'>
 
-    <Header/>
+      <Header/>
 
-    <Routes>
-        <Route exact path='/history' element={<HistoryDashBoard/>} />
-        <Route exact path='*' element={<Dashboard/>} />
-    </Routes>    
+      <Routes>
+          <Route exact path='/history' element={<HistoryDashBoard/>} />
+          <Route exact path='*' element={<Dashboard/>} />
+      </Routes>    
 
-      <div className='footer'></div>
+      <div className='footer' style={{minHeight: '10vh'}}></div>
     </div>
   );
 }

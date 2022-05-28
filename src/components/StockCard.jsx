@@ -1,7 +1,8 @@
 import React from 'react'
-import { Badge, Card } from 'react-bootstrap';
+import { Badge, Button, Card } from 'react-bootstrap';
 import { Constants } from '../constants.tsx';
 import { getVaultName } from '../helpers/helpers';
+import AddTransaction from './AddTransaction';
 import Transactions from './Transactions';
 
 interface Data {
@@ -13,11 +14,16 @@ const StockCard: React.FC<Data> = (props) => {
     const isSelected = props.stock.id === props.selectedVaultId;
     const classes = isSelected ? 'vault-selected mb-3 c-pointer' : 'mb-3 c-pointer';
     const badgeClass = isSelected ? 'light text-dark' : 'dark';
+    const [showAddTransaction, setShowAddTransaction] = React.useState(false);
+
+    const handleAddTransaction = (show) => {
+        setShowAddTransaction(!show);
+    }
 
     return (
         <Card style={{ width: '22rem' }} className={classes} onClick={() => props.setVaultId(props.stock.id)}>
             <Card.Header>
-                <Card.Title className='mb-0'>
+                <Card.Title className='mb-0 d-flex justify-content-between align-items-center'>
                     {props.stock.name} {' '}
                     <Badge bg={badgeClass} pill>{getVaultName({ vaultId: props.stock.type })}</Badge>
                 </Card.Title>
@@ -30,7 +36,21 @@ const StockCard: React.FC<Data> = (props) => {
                     {Constants.STOCKS + Constants.COLON} {props.stock.transactions && props.stock.transactions.length}
                 </Card.Text>
                 {isSelected && <Transactions selectedVault={props.stock} />}
+                {showAddTransaction &&
+                    <AddTransaction
+                        selectedVault={props.stock}
+                        handleAddTransaction={props.handleAddTransaction}>
+                    </AddTransaction>
+                }
             </Card.Body>
+
+            {(isSelected || showAddTransaction) && (
+                <div className='text-center mb-3'>
+                <Button size='sm' variant="outline-dark" onClick={() => handleAddTransaction(showAddTransaction)}>
+                    {showAddTransaction ? Constants.CANCEL : Constants.ADD_TRANSACTION}
+                </Button>
+            </div>
+            )}
         </Card>
     );
 }

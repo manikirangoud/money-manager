@@ -1,10 +1,14 @@
 import React from 'react'
+import { useDispatch } from 'react-redux';
+import { updateIsAuthenticatedInit } from '../redux/actions/userActions';
 
-const Authentication: React.FC<> = (props) => {
+const Authentication: React.FC<> = () => {
+
+    const dispatch = useDispatch();
 
     const onSecretPinChange = (v) =>{
         if(Number(v) === 135790){
-            props.setAuthenticated(true);
+            dispatch(updateIsAuthenticatedInit(true));
         }
     }
 

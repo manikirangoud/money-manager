@@ -5,6 +5,9 @@ import { Constants, CommonFeilds } from '../constants.tsx';
 import { db, HistoryRef } from '../helpers/firebase';
 import { updateDoc, doc, addDoc } from 'firebase/firestore';
 import { BankAccountOptions, BankFeilds } from '../constants.tsx';
+import { useDispatch } from 'react-redux';
+import { addTransToVaultInit } from '../redux/actions/vaultActions';
+import { addHistoryInit } from '../redux/actions/historyActions';
 
 interface Data {
     vaults: Array;
@@ -16,6 +19,7 @@ const AddTransaction: React.FC<Data> = (props) => {
     const [transactionType, setTransactionType] = React.useState(0);
     const [formData, updateFormData] = React.useState({});
     const [vaultId] = React.useState(props && props.selectedVault && props.selectedVault.id);
+    const dispatch = useDispatch();
 
     const handleChange = (e) => {
 
@@ -29,20 +33,35 @@ const AddTransaction: React.FC<Data> = (props) => {
         });
     };
 
+    const getHistoryFieldName = ({ formData, tType }) => {
+        if(formData){
+            if(formData.name){
+                return formData.name;
+            }else{
+                if(tType === BankAccountOptions.DEBIT){
+                    return formData[BankFeilds.SPENTON];
+                } else if(tType === BankAccountOptions.CREDIT){
+                    return formData[BankFeilds.SOURCE];
+                }
+            }
+        }
+    }
+
     const addTransaction = () => {
-        const vaultRef = doc(db, "vaults", vaultId);
-        formData.createdDate = Date().toString();
+        formData.timeStamp = Date().toString();
         const history = {
             operation: 1,
-            name: formData.name ? formData.name : props.transactionType == BankAccountOptions.DEBIT ? formData[BankFeilds.SPENTON] : formData[BankFeilds.SOURCE],
+            name: getHistoryFieldName({ formData: formData, tType: formData.transactionType }),
             parentType: props.selectedVault.type,
             parentId: vaultId,
             type: formData.transactionType,
             amount: formData.amount,
-            createdDate: formData.createdDate,
+            timeStamp: formData.timeStamp,
         }
-        addDoc(HistoryRef, history);
-        updateDoc(vaultRef, { transactions: props.selectedVault.transactions ? props.selectedVault.transactions.concat(formData) : [formData] });
+        let tempTrans = props.selectedVault.transactions ? props.selectedVault.transactions.concat(formData) : [formData];
+
+        dispatch(addTransToVaultInit(vaultId, tempTrans));
+        dispatch(addHistoryInit(history));
 
         props.handleAddTransaction(true);
     }
@@ -51,22 +70,18 @@ const AddTransaction: React.FC<Data> = (props) => {
         <Card style={{ width: '20rem', height: 'fit-content' }} className="mb-3">
 
             <Card.Header>
-                <Card.Title>Add a transaction to <span className='text-bold'>{props.selectedVault.name}</span></Card.Title>
+                <Card.Title className='fs-6 mb-0'>Add a transaction to <span className='text-bold'>{props.selectedVault.name}</span></Card.Title>
             </Card.Header>
 
             <Card.Body>
                 <Form>
-
                     {vaultType > 0 && renderVaultOptions(vaultType, handleChange)}
-
                     {(vaultType > 0 && transactionType > 0) && renderTransactionUI(vaultType, transactionType, handleChange)}
-
                 </Form>
             </Card.Body>
 
             <Card.Footer className='text-end'>
-                <Button variant="dark" className='me-3' onClick={() => props.handleAddTransaction(true)}>{Constants.CANCEL}</Button>
-                <Button variant="dark" onClick={addTransaction}>{Constants.SAVE_CHANGES}</Button>
+                <Button variant="outline-dark" onClick={addTransaction} size='sm'>{Constants.SAVE_CHANGES}</Button>
             </Card.Footer>
 
         </Card>
