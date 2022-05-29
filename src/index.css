@@ -61,3 +61,10 @@ code {
 .card-title > .badge{
   font-size: .8rem !important;
 }
+
+.accordion-button:not(.collapsed){
+  color: white !important;
+  font-weight: bold !important;
+  background-color: #212121 !important;
+  box-shadow: 0 0 0 0.25rem rgb(21 21 21 / 25%) !important;
+}

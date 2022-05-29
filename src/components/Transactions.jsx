@@ -2,32 +2,47 @@ import React from 'react'
 import { Accordion, ListGroup } from 'react-bootstrap';
 import AccordionBody from 'react-bootstrap/esm/AccordionBody';
 import { renderTransaction } from '../helpers/renderHelper';
+import * as moment from 'moment';
 
+const DATE_FORMAT = 'DD/MM/YYYY';
 
 const getFilteredTransactions = ({ trans }) => {
 
     if(trans){
         const filtered = {};
-
         trans.map(t => {
-            if(!filtered[t.timeStamp]){
-                filtered[t.timeStamp] = [];
+            // if(!filtered[getFormattedTimeStamp(t.createdDate, DATE_FORMAT)]){
+            //     filtered[getFormattedTimeStamp(t.createdDate, DATE_FORMAT)] = [];
+            // }
+            // filtered[getFormattedTimeStamp(t.createdDate, DATE_FORMAT)].push(t);
+            if(!filtered[t.transactedDate]){
+                filtered[t.transactedDate] = [];
             }
-            filtered[t.timeStamp].push(t);
+            filtered[t.transactedDate].push(t);
         })
         return filtered;
     }
 
 }
 
+const getFormattedTimeStamp = (ts, df) => {
+    return moment(ts).format(df);
+}
+
 
 const renderTrans = (filtered, props) => {
+
+    let firstKey = ''; 
 
     if(filtered){
         const items = [];
         for(const key in filtered){
+            if(firstKey.length === 0){
+                firstKey = key;
+            }
+
             items.push(
-                <Accordion.Item key={key}>
+                <Accordion.Item key={key} eventKey={key}>
                     <Accordion.Header>{key}</Accordion.Header>
                     <AccordionBody>
                         <ListGroup as="ol" numbered>
@@ -47,7 +62,7 @@ const renderTrans = (filtered, props) => {
             );
         }
        return (
-        <Accordion style={{maxHeight: '25rem', overflowY: 'auto'}} className='mb-3'>
+        <Accordion style={{maxHeight: '25rem', overflowY: 'auto'}} defaultActiveKey={firstKey}>
             {items}
         </Accordion>
        )

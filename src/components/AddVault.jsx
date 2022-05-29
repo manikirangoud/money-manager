@@ -1,7 +1,5 @@
 import React from 'react'
 import { Button, Card, Form } from 'react-bootstrap';
-import { db, HistoryRef } from '../helpers/firebase';
-import { collection, addDoc } from 'firebase/firestore';
 import BankVault from '../DataObjects/BankVault.ts';
 import { VaultType, CommonFeilds, CreditFeilds, Constants } from '../constants.tsx';
 import { renderVaults } from '../helpers/renderHelper';
@@ -16,7 +14,6 @@ interface Data{
 
 const AddVault: React.FC<Data> = (props) => {
 
-  const vaultsRef = collection(db, "vaults");
   const [vault, updateVault] = React.useState(BankVault);
   const [balanceOrLimit, setBalanceOrLimit] = React.useState(CommonFeilds.BALANCE);
   const dispatch = useDispatch();
@@ -30,7 +27,8 @@ const AddVault: React.FC<Data> = (props) => {
       vault.balance = 0;
     }
 
-    vault.timeStamp = Date().toString();
+    vault.createdDate = Date().toString();
+    vault.updatedDate = vault.createdDate;
     const history =  {
       operation: 1,
       name: vault.name,
@@ -38,7 +36,7 @@ const AddVault: React.FC<Data> = (props) => {
       parentId: '',
       type: vault.type,
       amount: vault[balanceOrLimit],
-      timeStamp: vault.timeStamp,
+      createdDate: vault.createdDate,
     };
 
     dispatch(addVaultInit(vault));
@@ -49,6 +47,7 @@ const AddVault: React.FC<Data> = (props) => {
 
   const handleChange = (e) => {
 
+    
     if(e.target.name === CommonFeilds.TYPE){
         if(Number(e.target.value.trim()) === VaultType.CREDIT){
           setBalanceOrLimit(CreditFeilds.LIMIT);
@@ -57,9 +56,11 @@ const AddVault: React.FC<Data> = (props) => {
         }
     }
 
+    console.log(balanceOrLimit);
+
     updateVault({
       ...vault,
-      [e.target.name]: (e.target.name === CommonFeilds.TYPE || e.target.name === CommonFeilds.BALANCE) ? Number(e.target.value.trim()) : e.target.value.trim()
+      [e.target.name]: (e.target.name === CommonFeilds.TYPE || e.target.name === CommonFeilds.BALANCE || e.target.name === CreditFeilds.LIMIT) ? Number(e.target.value.trim()) : e.target.value.trim()
     });
   };
     

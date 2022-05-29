@@ -10,6 +10,10 @@ interface Data {
     credit: CreditVault;
 }
 
+const getProgress = (bal, lim) => {
+    return (((lim - bal) / lim) * 100).toFixed(2);
+}
+
 const CreditCard: React.FC<Data> = (props) => {
 
     const isSelected = props.credit && props.credit.id === props.selectedVaultId;
@@ -20,6 +24,8 @@ const CreditCard: React.FC<Data> = (props) => {
     const handleAddTransaction = (show) => {
         setShowAddTransaction(!show);
     }
+
+    const progress = getProgress(props.credit.balance, props.credit.limit);
 
     return (
         <Card style={{ width: '22rem' }} className={classes} onClick={(e) => props.setVaultId(props.credit.id)}>
@@ -37,12 +43,12 @@ const CreditCard: React.FC<Data> = (props) => {
                     /
                     <span className='fw-bold'> {props.credit.limit}</span>
                 </Card.Text>
-                <ProgressBar variant='success' now={60} label={`${60}%`} style={{height: '.7rem', fontSize: '.6rem'}} className='mb-2'/>
+                <ProgressBar variant='success' now={progress} label={`${progress}%`} style={{height: '.7rem', fontSize: '.6rem'}} className='mb-2'/>
                 {isSelected && <Transactions selectedVault={props.credit} />}
                 {showAddTransaction &&
                     <AddTransaction
                         selectedVault={props.credit}
-                        handleAddTransaction={props.handleAddTransaction}>
+                        handleAddTransaction={handleAddTransaction}>
                     </AddTransaction>
                 }
             </Card.Body>

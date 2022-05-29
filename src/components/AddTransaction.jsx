@@ -48,7 +48,8 @@ const AddTransaction: React.FC<Data> = (props) => {
     }
 
     const addTransaction = () => {
-        formData.timeStamp = Date().toString();
+        formData.createdDate = Date().toString();
+        formData.updatedDate = formData.createdDate;
         const history = {
             operation: 1,
             name: getHistoryFieldName({ formData: formData, tType: formData.transactionType }),
@@ -56,18 +57,18 @@ const AddTransaction: React.FC<Data> = (props) => {
             parentId: vaultId,
             type: formData.transactionType,
             amount: formData.amount,
-            timeStamp: formData.timeStamp,
+            createdDate: formData.createdDate,
         }
-        let tempTrans = props.selectedVault.transactions ? props.selectedVault.transactions.concat(formData) : [formData];
+        let tempTrans = props.selectedVault.transactions ? [...props.selectedVault.transactions, formData] : [formData];
 
-        dispatch(addTransToVaultInit(vaultId, tempTrans));
+        dispatch(addTransToVaultInit(vaultId, tempTrans, props.selectedVault.type));
         dispatch(addHistoryInit(history));
 
         props.handleAddTransaction(true);
     }
 
     return (
-        <Card style={{ width: '20rem', height: 'fit-content' }} className="mb-3">
+        <Card style={{ width: '20rem', height: 'fit-content' }} className="mb-3 mt-3">
 
             <Card.Header>
                 <Card.Title className='fs-6 mb-0'>Add a transaction to <span className='text-bold'>{props.selectedVault.name}</span></Card.Title>
@@ -76,11 +77,25 @@ const AddTransaction: React.FC<Data> = (props) => {
             <Card.Body>
                 <Form>
                     {vaultType > 0 && renderVaultOptions(vaultType, handleChange)}
+
+                    <Form.Group className="mb-3">
+                        <Form.Label>Trasanction Date</Form.Label>
+                        <Form.Control
+                            type="date"
+                            name={CommonFeilds.TRANSACTED_DATE}
+                            placeholder="DD/MM/YYYY"
+                            onChange={handleChange}
+                            required
+                        />
+                    </Form.Group>
+
                     {(vaultType > 0 && transactionType > 0) && renderTransactionUI(vaultType, transactionType, handleChange)}
+
                 </Form>
             </Card.Body>
 
             <Card.Footer className='text-end'>
+                <Button variant="outline-dark" className='me-3' onClick={() => props.handleAddTransaction(true)} size='sm'>{Constants.CANCEL}</Button>
                 <Button variant="outline-dark" onClick={addTransaction} size='sm'>{Constants.SAVE_CHANGES}</Button>
             </Card.Footer>
 

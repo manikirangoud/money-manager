@@ -31,21 +31,22 @@ const BankCard: React.FC<Data> = (props) => {
 
             <Card.Body>
                 <Card.Text>
-                    {Constants.BALANCE + Constants.COLON} {getBankBalance({trans: props.bank.transactions})}
+                    {Constants.BALANCE + Constants.COLON} {props.bank.balance}
+                    {/* {getBankBalance({trans: props.bank.transactions})} */}
                 </Card.Text>
                 {isSelected && <Transactions selectedVault={props.bank} />}
                 {showAddTransaction &&
                     <AddTransaction
                         selectedVault={props.bank}
-                        handleAddTransaction={props.handleAddTransaction}>
+                        handleAddTransaction={handleAddTransaction}>
                     </AddTransaction>
                 }
             </Card.Body>
             
-            {(isSelected || showAddTransaction) && (
+            {(isSelected && !showAddTransaction) && (
                 <div className='text-center mb-3'>
                     <Button size='sm' variant="outline-dark" onClick={() => handleAddTransaction(showAddTransaction)}>
-                        {showAddTransaction ? Constants.CANCEL : Constants.ADD_TRANSACTION}
+                         {Constants.ADD_TRANSACTION}
                     </Button>
                 </div>
             )}

@@ -1,6 +1,7 @@
-import { VaultActions } from '../../constants.tsx';
+import { VaultActions, VaultType } from '../../constants.tsx';
 import { VaultsRef, db } from '../../helpers/firebase';
 import { getDocs, addDoc, updateDoc, doc } from 'firebase/firestore';
+import { getBankBalance } from '../../helpers/helpers';
 
 // Fetching vaults from firestore
 const getVaults = (vaults) => ({
@@ -9,12 +10,14 @@ const getVaults = (vaults) => ({
 });
 
 export const getVaultsInit = () => {
+    console.log('called');
     return async function(dispatch){
         const vaultsData = await getDocs(VaultsRef);
         const vaults = [];
         vaultsData.docs.map(doc => ( 
             vaults.push({...doc.data(), id: doc.id })
         ));
+        console.log(vaults);
         dispatch(getVaults(vaults));
     }
 }
@@ -52,6 +55,7 @@ export const addVaultInit = (vault) => {
     return function(dispatch){
         addDoc(VaultsRef, vault);
         dispatch(addVault());
+        dispatch(getVaultsInit());
     }
 }
 
@@ -60,10 +64,30 @@ const addTransToVault = () => ({
     type: VaultActions.ADD_TRANSACTION,
 });
 
-export const addTransToVaultInit = (id, transactions) => {
+export const addTransToVaultInit = (id, transactions, vaultType) => {
     return function(dispatch){
         const vaultRef = doc(db, "vaults", id);
-        updateDoc(vaultRef, { transactions: transactions });
+        console.log(vaultType);
+        if(vaultType === VaultType.BANK_ACCOUNT || vaultType === VaultType.CASH){
+            const bal = getBankBalance({trans: transactions});
+            updateDoc(vaultRef, { transactions: transactions, balance: bal });
+        } else{
+            updateDoc(vaultRef, { transactions: transactions });
+        }
         dispatch(addTransToVault());
+        dispatch(getVaultsInit());
     }
 }
+
+// Updating vault balance on addition of transaction to vault 
+// const updateVaultBalance = () => ({
+//     type: VaultActions.ADD_TRANSACTION,
+// });
+
+// export const updateVaultBalanceInit = (transactions) => {
+//     return function(dispatch){
+//         const vaultRef = doc(db, "vaults", id);
+//         updateDoc(vaultRef, { transactions: transactions });
+//         dispatch(updateVaultBalance());
+//     }
+// }

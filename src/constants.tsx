@@ -47,7 +47,8 @@ export const enum CommonFeilds{
     DESCRIPTION = 'description',
     LASTTRANSACTION = "lastTransaction",
     AMOUNT = "amount",
-    TRANSACTIONTYPE = "transactionType"
+    TRANSACTIONTYPE = "transactionType",
+    TRANSACTED_DATE = 'transactedDate'
 }
 
 export const enum BankFeilds{

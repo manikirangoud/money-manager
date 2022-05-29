@@ -39,7 +39,7 @@ const StockCard: React.FC<Data> = (props) => {
                 {showAddTransaction &&
                     <AddTransaction
                         selectedVault={props.stock}
-                        handleAddTransaction={props.handleAddTransaction}>
+                        handleAddTransaction={handleAddTransaction}>
                     </AddTransaction>
                 }
             </Card.Body>

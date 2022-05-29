@@ -22,7 +22,7 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     dispatch(getVaultsInit());
   }, []);
-
+  
   const vaultData = useSelector(state => state.vaultData);
   const vaults = vaultData && vaultData.vaults;
   const vaultId = vaultData && vaultData.selectedVaultId;
@@ -63,7 +63,7 @@ const Dashboard: React.FC = () => {
           {showAddVault && <AddVault hideCard={handleAddVault} ></AddVault>}
 
           <div className='text-center mb-3'>
-            <Button variant="dark" onClick={() => handleAddVault(showAddVault)}>{showAddVault ? Constants.CANCEL : Constants.ADD_VAULT}</Button>
+            <Button variant="outline-dark" size='sm' onClick={() => handleAddVault(showAddVault)}>{showAddVault ? Constants.CANCEL : Constants.ADD_VAULT}</Button>
           </div>
 
         </div>
