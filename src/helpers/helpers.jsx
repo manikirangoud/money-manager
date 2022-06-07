@@ -39,3 +39,7 @@ export const getCreditBalance = ({ trans }) =>{
     }
     return db - cr;
 }
+
+export const getFormattedCurrency = (n) => {
+    return new Intl.NumberFormat('en-IN', {style: 'currency', currency: 'INR' }).format(n);
+}

@@ -1,7 +1,8 @@
-import { Form } from 'react-bootstrap';
+import { Alert, Form } from 'react-bootstrap';
 import BankTransaction from '../components/BankTransaction';
 import StockTransaction from '../components/StockTransaction';
 import { VaultType, BankAccountOptions, StockOptions } from '../constants.tsx';
+import { getFormattedCurrency } from './helpers';
 
 
 // export const renderVaultType = ({vault})
@@ -77,12 +78,17 @@ export const renderTransactionUI = (vaultType, transactionType, handleChange) =>
 
 export const renderTransaction = (vault, t) => {
     if (vault.type === VaultType.STOCK) {
+        //const classes = t.transactionType === StockOptions.SELL ? 'mb-0 text-danger' : 'mb-0 text-success';
         return (
-            <p className='mb-0'><span className='text-bold'>{t.amount}</span> {t.transactionType === StockOptions.BUY ? 'bought the ' : 'sold the '} <span className='text-bold'>{t.name}</span></p>
+            <p className='mb-0'><span className='text-bold'>{getFormattedCurrency(t.amount)}</span> {t.transactionType === StockOptions.BUY ? 'bought the ' : 'sold the '} <span className='text-bold'>{t.name}</span></p>
         );
     } else {
+       // const classes = t.transactionType === BankAccountOptions.CREDIT ? 'mb-0 text-danger' : 'mb-0 text-success';
         return (
-            <p className='mb-0'><span className='text-bold'>{t.amount}</span> {t.transactionType === BankAccountOptions.DEBIT ? 'spent for ' : 'credited from '} <span className='text-bold'>{t.transactionType === BankAccountOptions.DEBIT ? t.spentOn : t.source}</span> </p>
+            // <Alert key={variant} variant={variant}>
+            //     <p className='mb-0'><span className='text-bold'>{t.amount}</span> {t.transactionType === BankAccountOptions.DEBIT ? 'spent for ' : 'credited from '} <span className='text-bold'>{t.transactionType === BankAccountOptions.DEBIT ? t.spentOn : t.source}</span> </p>
+            // </Alert>
+            <p className='mb-0'><span className='text-bold'>{getFormattedCurrency(t.amount)}</span> {t.transactionType === BankAccountOptions.DEBIT ? 'spent for ' : 'credited from '} <span className='text-bold'>{t.transactionType === BankAccountOptions.DEBIT ? t.spentOn : t.source}</span> </p>
         );
     }
 }

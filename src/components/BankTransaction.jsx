@@ -36,6 +36,8 @@ const BankTransaction: React.FC<Data> = (props) => {
       <Form.Group className="mb-3">
         <Form.Label>Description</Form.Label>
         <Form.Control
+          as="textarea"
+          rows={3}
           name={CommonFeilds.DESCRIPTION}
           placeholder="Add a detailed description"
           onChange={props.handleChange}

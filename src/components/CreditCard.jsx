@@ -1,7 +1,7 @@
 import React from 'react'
 import { Badge, Card, ProgressBar } from 'react-bootstrap';
 import Transactions from './Transactions';
-import { getVaultName, getCreditBalance } from '../helpers/helpers';
+import { getVaultName, getCreditBalance, getFormattedCurrency } from '../helpers/helpers';
 import AddTransaction from './AddTransaction';
 import { Button } from 'react-bootstrap';
 import { Constants } from '../constants.tsx';
@@ -39,9 +39,9 @@ const CreditCard: React.FC<Data> = (props) => {
             <Card.Body>
                 <Card.Text className='mb-2'>
                     Credit used:
-                    <span className='text-danger fw-bold'> {getCreditBalance({ trans: props.credit.transactions })} </span>
+                    <span className='text-danger fw-bold'> { getFormattedCurrency(getCreditBalance({ trans: props.credit.transactions }))} </span>
                     /
-                    <span className='fw-bold'> {props.credit.limit}</span>
+                    <span className='fw-bold'> {getFormattedCurrency(props.credit.limit)}</span>
                 </Card.Text>
                 <ProgressBar variant='success' now={progress} label={`${progress}%`} style={{height: '.7rem', fontSize: '.6rem'}} className='mb-2'/>
                 {isSelected && <Transactions selectedVault={props.credit} />}
@@ -53,9 +53,9 @@ const CreditCard: React.FC<Data> = (props) => {
                 }
             </Card.Body>
 
-            {(isSelected || showAddTransaction) && (
-                <div className='text-center mb-3'>
-                    <Button size='sm' variant="outline-dark" onClick={() => handleAddTransaction(showAddTransaction)}>
+            {(isSelected && !showAddTransaction) && (
+                <div className='text-center mb-3 ps-4 pe-4'>
+                    <Button className='w-100' size='sm' variant="outline-dark" onClick={() => handleAddTransaction(showAddTransaction)}>
                         {showAddTransaction ? Constants.CANCEL : Constants.ADD_TRANSACTION}
                     </Button>
                 </div>

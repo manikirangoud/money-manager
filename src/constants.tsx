@@ -37,6 +37,7 @@ export const enum Constants{
     BALANCE = 'Balance',
     COLON = ': ',
     STOCKS = 'Stocks',
+    NO_TRANSACTION = 'No transaction was added! Try to create by adding new transaction.'
 }
 
 export const enum CommonFeilds{

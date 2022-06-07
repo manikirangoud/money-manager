@@ -67,7 +67,7 @@ const addTransToVault = () => ({
 export const addTransToVaultInit = (id, transactions, vaultType) => {
     return function(dispatch){
         const vaultRef = doc(db, "vaults", id);
-        console.log(vaultType);
+        
         if(vaultType === VaultType.BANK_ACCOUNT || vaultType === VaultType.CASH){
             const bal = getBankBalance({trans: transactions});
             updateDoc(vaultRef, { transactions: transactions, balance: bal });

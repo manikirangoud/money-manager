@@ -10,6 +10,28 @@ import Transactions from './Transactions';
 import Authentication from './Authentication';
 import { useDispatch, useSelector } from "react-redux";
 import { getVaultsInit, updateSelectedVaultIdInit, updateSelectedVaultInit } from "../redux/actions/vaultActions";
+import { async } from "@firebase/util";
+//const pdfjs = require('pdfjs-dist/es5/build/pdf');
+// import * as pdfjs from "pdfjs-dist/build/pdf";
+
+// async function getContent(src){
+//   const doc = await pdfjs.getDocument(src).promise;
+//   const page = await doc.getPage(2);
+//   return await page.getTextContent();
+// }
+
+// async function getItems(src){
+//   const content = await getContent(src);
+//   const items = content.items.map((item) => {
+//     console.log("pdf content: ", item);
+//   });
+// }
+
+
+// getItems('./doc.pdf');
+
+
+
 
 
 const Dashboard: React.FC = () => {
@@ -62,8 +84,8 @@ const Dashboard: React.FC = () => {
 
           {showAddVault && <AddVault hideCard={handleAddVault} ></AddVault>}
 
-          <div className='text-center mb-3'>
-            <Button variant="outline-dark" size='sm' onClick={() => handleAddVault(showAddVault)}>{showAddVault ? Constants.CANCEL : Constants.ADD_VAULT}</Button>
+          <div className='text-center mb-3' style={{width: '22rem'}}>
+            <Button style={{width: '20rem'}} variant="outline-dark" size='sm' onClick={() => handleAddVault(showAddVault)}>{showAddVault ? Constants.CANCEL : Constants.ADD_VAULT}</Button>
           </div>
 
         </div>
@@ -81,5 +103,8 @@ const Dashboard: React.FC = () => {
       </div>
     ));
 }
+
+
+
 
 export default Dashboard;

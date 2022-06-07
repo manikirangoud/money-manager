@@ -1,7 +1,7 @@
 import React from 'react'
 import { Badge, Button, Card } from 'react-bootstrap';
 import { Constants } from '../constants.tsx';
-import { getVaultName } from '../helpers/helpers';
+import { getFormattedCurrency, getVaultName } from '../helpers/helpers';
 import AddTransaction from './AddTransaction';
 import Transactions from './Transactions';
 
@@ -31,7 +31,7 @@ const StockCard: React.FC<Data> = (props) => {
 
             <Card.Body>
                 <Card.Text>
-                    {Constants.BALANCE + Constants.COLON} {props.stock.balance}
+                    {Constants.BALANCE + Constants.COLON} <span className='fw-bold'>{getFormattedCurrency(props.stock.balance)}</span>
                     <br />
                     {Constants.STOCKS + Constants.COLON} {props.stock.transactions && props.stock.transactions.length}
                 </Card.Text>
@@ -44,9 +44,9 @@ const StockCard: React.FC<Data> = (props) => {
                 }
             </Card.Body>
 
-            {(isSelected || showAddTransaction) && (
-                <div className='text-center mb-3'>
-                <Button size='sm' variant="outline-dark" onClick={() => handleAddTransaction(showAddTransaction)}>
+            {(isSelected && !showAddTransaction) && (
+                <div className='text-center mb-3 ps-4 pe-4'>
+                <Button className='w-100' size='sm' variant="outline-dark" onClick={() => handleAddTransaction(showAddTransaction)}>
                     {showAddTransaction ? Constants.CANCEL : Constants.ADD_TRANSACTION}
                 </Button>
             </div>

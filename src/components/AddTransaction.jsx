@@ -21,10 +21,13 @@ const AddTransaction: React.FC<Data> = (props) => {
     const [vaultId] = React.useState(props && props.selectedVault && props.selectedVault.id);
     const dispatch = useDispatch();
 
+    const [headerClasses, setHeaderClasses] = React.useState('');
+
     const handleChange = (e) => {
 
         if (e.target.name === CommonFeilds.TRANSACTIONTYPE) {
-            setTransactionType(e.target.value);
+            setTransactionType(Number(e.target.value));
+            setHeaderClasses(Number(e.target.value) === BankAccountOptions.CREDIT ? 'bg-success': 'bg-danger');
         }
 
         updateFormData({
@@ -68,38 +71,41 @@ const AddTransaction: React.FC<Data> = (props) => {
     }
 
     return (
-        <Card style={{ width: '20rem', height: 'fit-content' }} className="mb-3 mt-3">
+        <>
+            <hr/>
+            <Card style={{ width: '20rem', height: 'fit-content' }} className="mb-3 mt-3 vault-selected">
+                {console.log("headerClasses", headerClasses)}
+                <Card.Header className={headerClasses}>
+                    <Card.Title className='fs-6 mb-0'>Add a transaction to <span className='text-bold'>{props.selectedVault.name}</span></Card.Title>
+                </Card.Header>
 
-            <Card.Header>
-                <Card.Title className='fs-6 mb-0'>Add a transaction to <span className='text-bold'>{props.selectedVault.name}</span></Card.Title>
-            </Card.Header>
+                <Card.Body>
+                    <Form>
+                        {vaultType > 0 && renderVaultOptions(vaultType, handleChange)}
 
-            <Card.Body>
-                <Form>
-                    {vaultType > 0 && renderVaultOptions(vaultType, handleChange)}
+                        <Form.Group className="mb-3">
+                            <Form.Label>Trasanction Date</Form.Label>
+                            <Form.Control
+                                type="date"
+                                name={CommonFeilds.TRANSACTED_DATE}
+                                placeholder="DD/MM/YYYY"
+                                onChange={handleChange}
+                                required
+                            />
+                        </Form.Group>
 
-                    <Form.Group className="mb-3">
-                        <Form.Label>Trasanction Date</Form.Label>
-                        <Form.Control
-                            type="date"
-                            name={CommonFeilds.TRANSACTED_DATE}
-                            placeholder="DD/MM/YYYY"
-                            onChange={handleChange}
-                            required
-                        />
-                    </Form.Group>
+                        {(vaultType > 0 && transactionType > 0) && renderTransactionUI(vaultType, transactionType, handleChange)}
 
-                    {(vaultType > 0 && transactionType > 0) && renderTransactionUI(vaultType, transactionType, handleChange)}
+                    </Form>
+                </Card.Body>
 
-                </Form>
-            </Card.Body>
+                <Card.Footer className='text-end d-flex gap-3'>
+                    <Button style={{flex: 1}} variant="outline-dark" onClick={() => props.handleAddTransaction(true)} size='sm'>{Constants.CANCEL}</Button>
+                    <Button style={{flex: 1}} variant="outline-dark" onClick={addTransaction} size='sm'>{Constants.SAVE_CHANGES}</Button>
+                </Card.Footer>
 
-            <Card.Footer className='text-end'>
-                <Button variant="outline-dark" className='me-3' onClick={() => props.handleAddTransaction(true)} size='sm'>{Constants.CANCEL}</Button>
-                <Button variant="outline-dark" onClick={addTransaction} size='sm'>{Constants.SAVE_CHANGES}</Button>
-            </Card.Footer>
-
-        </Card>
+            </Card>
+        </>
     );
 }
 

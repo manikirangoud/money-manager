@@ -2,7 +2,7 @@ import React from 'react'
 import { Badge, Button, Card } from 'react-bootstrap';
 import { Constants } from '../constants.tsx';
 import Transactions from './Transactions';
-import { getVaultName, getBankBalance } from '../helpers/helpers';
+import { getFormattedCurrency, getVaultName } from '../helpers/helpers';
 import AddTransaction from './AddTransaction';
 
 interface Data {
@@ -31,11 +31,11 @@ const BankCard: React.FC<Data> = (props) => {
 
             <Card.Body>
                 <Card.Text>
-                    {Constants.BALANCE + Constants.COLON} {props.bank.balance}
+                    {Constants.BALANCE + Constants.COLON} <span className='fw-bold'>{getFormattedCurrency(props.bank.balance)}</span>
                     {/* {getBankBalance({trans: props.bank.transactions})} */}
                 </Card.Text>
                 {isSelected && <Transactions selectedVault={props.bank} />}
-                {showAddTransaction &&
+                {isSelected && showAddTransaction &&
                     <AddTransaction
                         selectedVault={props.bank}
                         handleAddTransaction={handleAddTransaction}>
@@ -44,8 +44,8 @@ const BankCard: React.FC<Data> = (props) => {
             </Card.Body>
             
             {(isSelected && !showAddTransaction) && (
-                <div className='text-center mb-3'>
-                    <Button size='sm' variant="outline-dark" onClick={() => handleAddTransaction(showAddTransaction)}>
+                <div className='text-center mb-3 ps-4 pe-4'>
+                    <Button className='w-100' size='sm' variant="outline-dark" onClick={() => handleAddTransaction(showAddTransaction)}>
                          {Constants.ADD_TRANSACTION}
                     </Button>
                 </div>
