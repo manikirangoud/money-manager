@@ -37,7 +37,8 @@ export const enum Constants{
     BALANCE = 'Balance',
     COLON = ': ',
     STOCKS = 'Stocks',
-    NO_TRANSACTION = 'No transaction was added! Try to create by adding new transaction.'
+    NO_TRANSACTION = 'No transaction was added! Try to create by adding new transaction.',
+    ADD_DAYS_LEFT = 'Add Days left'
 }
 
 export const enum CommonFeilds{
@@ -49,7 +50,8 @@ export const enum CommonFeilds{
     LASTTRANSACTION = "lastTransaction",
     AMOUNT = "amount",
     TRANSACTIONTYPE = "transactionType",
-    TRANSACTED_DATE = 'transactedDate'
+    TRANSACTED_DATE = 'transactedDate',
+    TARGET_DATE = 'targetDate'
 }
 
 export const enum BankFeilds{
@@ -112,4 +114,9 @@ export const enum UserActions{
 export const enum HistoryActions{
     GET_HISTORY = 'GET_HISTORY',
     ADD_HISTORY = 'ADD_HISTORY' 
+}
+
+export const enum DaysLeftActions{
+    GET_DAYS_LEFT = 'GET_DAYS_LEFT',
+    ADD_DAYS_LEFT = 'ADD_DAYS_LEFT' 
 }

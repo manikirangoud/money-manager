@@ -71,7 +71,7 @@ const Dashboard: React.FC = () => {
 
   return (!isAuthenticated ? <Authentication/> :
     (
-      <div className='d-flex justify-content-around flex-wrap p-4 bg-light' style={{minHeight: '80vh'}}>
+      <div className='d-flex justify-content-around flex-wrap py-4 bg-light' style={{minHeight: '80vh'}}>
         <div style={{ flex: 1 }} className='d-flex flex-column align-items-center'>
           {vaults && vaults.map(v => {
             switch (v.type) {
