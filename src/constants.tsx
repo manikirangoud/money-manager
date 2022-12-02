@@ -28,6 +28,13 @@ export const enum HistoryOperations{
     DELETE = 3
 }
 
+export const enum RecurringTrasactionStatus{
+    TODAY = 0,
+    UPCOMING = 1,
+    COMPLETED = 2,
+    All = 3
+}
+
 export const enum Constants{
     GO_TO_DETAILS = "Go to Details",
     CANCEL = "Cancel",
@@ -38,7 +45,8 @@ export const enum Constants{
     COLON = ': ',
     STOCKS = 'Stocks',
     NO_TRANSACTION = 'No transaction was added! Try to create by adding new transaction.',
-    ADD_DAYS_LEFT = 'Add Days left'
+    ADD_DAYS_LEFT = 'Add Days left',
+    ADD_RECURRING_TRANSACTION = 'Add Recurring Transaction'
 }
 
 export const enum CommonFeilds{
@@ -51,7 +59,10 @@ export const enum CommonFeilds{
     AMOUNT = "amount",
     TRANSACTIONTYPE = "transactionType",
     TRANSACTED_DATE = 'transactedDate',
-    TARGET_DATE = 'targetDate'
+    TARGET_DATE = 'targetDate',
+    START_DATE = 'startDate',
+    TENURE_IN_MONTHS = 'tenureInMonths',
+    LOAN_AMOUNT = 'loanAmount'
 }
 
 export const enum BankFeilds{
@@ -109,6 +120,7 @@ export const enum VaultActions{
 
 export const enum UserActions{
     UPDATE_IS_AUTHENTICATED = 'UPDATE_IS_AUTHENTICATED',
+    UPDATE_CAD_RATE = 'UPDATE_CAD_RATE',
 }
 
 export const enum HistoryActions{
@@ -119,4 +131,9 @@ export const enum HistoryActions{
 export const enum DaysLeftActions{
     GET_DAYS_LEFT = 'GET_DAYS_LEFT',
     ADD_DAYS_LEFT = 'ADD_DAYS_LEFT' 
+}
+
+export const enum RecurringTransactionActions{
+    GET_RECURRING_TRANSACTION = 'GET_RECURRING_TRANSACTION',
+    ADD_RECURRING_TRANSACTION = 'ADD_RECURRING_TRANSACTION' 
 }

@@ -20,3 +20,4 @@ export const db = getFirestore(app);
 export const HistoryRef = collection(db, "history");
 export const VaultsRef = collection(db, "vaults");
 export const DaysLeftRef = collection(db, "daysleft");
+export const RecurringTransactionsRef = collection(db, "recurring-transactions");

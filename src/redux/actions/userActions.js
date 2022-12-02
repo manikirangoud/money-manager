@@ -10,3 +10,15 @@ export const updateIsAuthenticatedInit = ({ authenticated= Boolean }) => {
         dispatch(updateIsAuthenticated(authenticated));
     }
 }
+
+//Updating the CAD Rate
+const updateCadRate = (cadRate) => ({
+    type: UserActions.UPDATE_CAD_RATE,
+    data: cadRate
+});
+
+export const updateCadRateInit = (cadRate) => {
+    return function(dispatch){
+        dispatch(updateCadRate(cadRate));
+    }
+}

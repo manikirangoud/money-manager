@@ -12,11 +12,11 @@ const getVaults = (vaults) => ({
 export const getVaultsInit = () => {
     console.log('called');
     return async function(dispatch){
-        const vaultsData = await getDocs(VaultsRef);
+       // const vaultsData = await getDocs(VaultsRef);
         const vaults = [];
-        vaultsData.docs.map(doc => ( 
-            vaults.push({...doc.data(), id: doc.id })
-        ));
+        // vaultsData.docs.map(doc => ( 
+        //     vaults.push({...doc.data(), id: doc.id })
+        // ));
         console.log(vaults);
         dispatch(getVaults(vaults));
     }

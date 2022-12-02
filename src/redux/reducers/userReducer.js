@@ -2,6 +2,7 @@ import { UserActions } from "../../constants.tsx";
 
 const initialState = {
     isAuthenticated: true,
+    cadRate: 60.00
 }
 
 export const userReducer = (state = initialState, action) => {
@@ -10,6 +11,12 @@ export const userReducer = (state = initialState, action) => {
             return{
                 ...state,
                 isAuthenticated: action.data
+            }
+
+        case UserActions.UPDATE_CAD_RATE:
+            return{
+                ...state,
+                cadRate: action.data
             }
 
         default:

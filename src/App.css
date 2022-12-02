@@ -38,6 +38,15 @@
   background: #212121 !important;
 }
 
+.accordion-item {
+  border: 1px solid rgba(0,0,0,.125) !important;
+}
+
+.accordion-header > .accordion-button {
+  font-weight: bold !important;
+}
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

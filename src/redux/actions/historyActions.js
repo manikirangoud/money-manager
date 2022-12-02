@@ -10,11 +10,11 @@ const getHistory = (history) => ({
 
 export const getHistoryInit = () => {
     return async function(dispatch){
-        const hisData = await getDocs(HistoryRef);
+        //const hisData = await getDocs(HistoryRef);
         const history = []
-        hisData.docs.map(doc => {
-            history.push({...doc.data(), id: doc.id});
-        })
+        // hisData.docs.map(doc => {
+        //     history.push({...doc.data(), id: doc.id});
+        // })
         dispatch(getHistory(history));
     }
 }

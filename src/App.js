@@ -40,7 +40,7 @@ function App() {
             </Nav>
           </Col>
           
-          <Col sm={9}  className="p-0">
+          <Col sm={8}  className="p-0">
             <Tab.Content>
               <Tab.Pane eventKey="recurring">
                 <RecurringTransactionsDashBoard/>
