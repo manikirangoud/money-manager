@@ -6,7 +6,7 @@ import HistoryDashBoard from './components/HistoryDashBoard';
 import Dashboard from './components/Dashboard';
 import { Col, Nav, Row, Tab } from 'react-bootstrap';
 import RecurringTransactionsDashBoard from './components/RecurringTransactionsDashboard';
-import DaysLeftDashBoard from './components/DaysLeftDashBoard';
+import EventsDashBoard from './components/EventsDashBoard';
 
 function App() {
 
@@ -29,7 +29,7 @@ function App() {
                 <Nav.Link eventKey="recurring">Recurring Transactions</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="days-left">Days Left</Nav.Link>
+                <Nav.Link eventKey="events">Events</Nav.Link>
               </Nav.Item>
               <Nav.Item>
                 <Nav.Link eventKey="accounts">Accounts</Nav.Link>
@@ -49,8 +49,8 @@ function App() {
                 </Routes>  */}
               </Tab.Pane>
 
-              <Tab.Pane eventKey="days-left">
-                <DaysLeftDashBoard/>
+              <Tab.Pane eventKey="events">
+                <EventsDashBoard/>
                 {/* <Routes>
                   <Route exact path='*' element={<Dashboard/>} />
                 </Routes>  */}

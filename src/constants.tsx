@@ -45,7 +45,7 @@ export const enum Constants{
     COLON = ': ',
     STOCKS = 'Stocks',
     NO_TRANSACTION = 'No transaction was added! Try to create by adding new transaction.',
-    ADD_DAYS_LEFT = 'Add Days left',
+    ADD_EVENT = 'Add Event',
     ADD_RECURRING_TRANSACTION = 'Add Recurring Transaction'
 }
 
@@ -128,9 +128,9 @@ export const enum HistoryActions{
     ADD_HISTORY = 'ADD_HISTORY' 
 }
 
-export const enum DaysLeftActions{
-    GET_DAYS_LEFT = 'GET_DAYS_LEFT',
-    ADD_DAYS_LEFT = 'ADD_DAYS_LEFT' 
+export const enum EventActions{
+    GET_EVENTS = 'GET_EVENTS',
+    ADD_EVENT = 'ADD_EVENT' 
 }
 
 export const enum RecurringTransactionActions{

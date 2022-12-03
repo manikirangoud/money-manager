@@ -1,4 +1,4 @@
-export default interface DaysLeft{
+export default interface Event{
     name: string;
     targetDate: string;
     createdDate: string;

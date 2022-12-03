@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import RecurringTransaction from "./RecurringTransaction";
 import { getRecurringTransactionsInit } from "../redux/actions/recurringTransactionActions";
@@ -20,10 +20,12 @@ const RecurringTransactionsDashBoard: React.FC = () => {
   const userData = useSelector(state => state.userData);
   const cadRate = userData && userData.cadRate;
 
+  const addTransRef = useRef(null);
+
   if(rtList){
     rtList.map(r => {
       r.dateStatus = getDays(r.startDate);
-      console.log("r.dateStatus", r.dateStatus);
+     // console.log("r.dateStatus", r.dateStatus);
     });
   }
 
@@ -70,6 +72,9 @@ const RecurringTransactionsDashBoard: React.FC = () => {
 
   const handleAddRT= (show) => {
     setShowAddRT(!show);
+   // if(showAddRT){
+   //  addTransRef.current?.scrollIntoView({behavior: 'smooth'});
+   //}
   }
 
   const handleChange = (e) => {
@@ -80,7 +85,7 @@ const RecurringTransactionsDashBoard: React.FC = () => {
       <div className="mt-3 d-flex flex-column align-items-center" style={{minHeight: '80vh'}}>
         <div className="d-flex justify-content-center">
           <h3>Recurring Transactions</h3>
-          <Form.Group className="mb-3 ms-5" style={{ width: '5rem' }}>
+          <Form.Group className="mb-3 ms-3" style={{ width: '5rem' }}>
             <Form.Control
               type="number"
               min={1}
@@ -113,7 +118,7 @@ const RecurringTransactionsDashBoard: React.FC = () => {
           }
         </Accordion>
 
-        {showAddRT && <AddRecurringTransaction hideCard={handleAddRT} ></AddRecurringTransaction>}
+        {showAddRT && <AddRecurringTransaction hideCard={handleAddRT} addTransRef={addTransRef}></AddRecurringTransaction>}
 
         <div className='text-center mb-3' style={{width: '22rem'}}>
           <Button style={{width: '20rem'}} variant="outline-dark" size='sm' 

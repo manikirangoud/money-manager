@@ -14,6 +14,8 @@ const AddRecurringTransaction: React.FC<Data> = (props) => {
 
   const [rtData, updateRtData] = React.useState(RecurringTransaction);
   const dispatch = useDispatch();
+
+  //console.log("props.addTransRef", props);
   
   function addRecurringTransaction(){
 
@@ -34,7 +36,7 @@ const AddRecurringTransaction: React.FC<Data> = (props) => {
     
   return (
     <>
-      <Card style={{ width: '22rem' }} className="mb-3">
+      <Card style={{ width: '22rem' }} className="mb-3" ref={props.addTransRef}>
 
         <Card.Header>
           <Card.Title>Add a new recurring transaction</Card.Title>
